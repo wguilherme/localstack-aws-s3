@@ -1,16 +1,17 @@
 
+dotenv.config()
+
 import cors from 'cors'
 import dotenv from 'dotenv'
 import express from 'express'
 import multer from "multer"
 import path from 'path'
 import uploadToS3 from './uploadToS3.js'
-const upload = multer({ dest: "uploads/" })
 
-dotenv.config()
+const upload = multer({ dest: "uploads/" })
 const app = express()
 app.use(cors());
-const PORT = process.env.PORT || 4200;
+
 app.post('/upload', upload.any(), async (req, res) => {
   try {
     const uploadedImage = await uploadToS3({
@@ -25,6 +26,7 @@ app.post('/upload', upload.any(), async (req, res) => {
   }
 })
 
+const PORT = process.env.PORT || 4200;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });

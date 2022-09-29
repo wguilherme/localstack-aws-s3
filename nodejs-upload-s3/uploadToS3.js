@@ -25,9 +25,9 @@ export default async function uploadToS3({
 
   try {
     const data = await s3.upload(params).promise()
-    console.log('data', data)
+    console.log({ status: 'success', message: 'File uploaded successfully', data: { data } })
     return data.Location
   } catch (error) {
-    console.log('ocorreu um erro', error.message)
+    console.log({ status: 'error', message: error.message })
   }
 }
